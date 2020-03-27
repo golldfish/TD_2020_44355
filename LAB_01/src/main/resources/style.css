@@ -1,0 +1,6 @@
+.default-color.chart-symbol {
+    -fx-background-color: blue, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 1px;
+    -fx-padding: 1px;
+}
