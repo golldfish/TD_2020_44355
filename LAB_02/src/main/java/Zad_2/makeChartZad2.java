@@ -18,14 +18,15 @@ public class makeChartZad2 extends Application {
 
         //def axes
         final NumberAxis xAxis = new NumberAxis(0, 0.2, 0.02);
+        //final NumberAxis xAxis=new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
 
-        xAxis.setLabel("X");
-        yAxis.setLabel("Y");
+        xAxis.setLabel("t");
+        yAxis.setLabel("s(t)");
 
         //create chart
         final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Simple tone");
+        lineChart.setTitle("Quantization - q = 16");
 
         //def series
         XYChart.Series series = new XYChart.Series();
