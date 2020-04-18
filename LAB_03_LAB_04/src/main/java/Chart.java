@@ -24,15 +24,15 @@ public class Chart extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //for S(t)
-        /*final int start = 0;
+        final int start = 0;
         final int stop = 553;
-        final double step = 7;*/
+        final double step = 7;
 
         //X(t)
-        final int start = -10;
+        /*final int start = -10;
         final int stop = 10;
         final double step = 100;
-
+        */
         //for others
         /*final int start = 0;
         final int stop = 1;
@@ -43,19 +43,19 @@ public class Chart extends Application {
 
 
         //for S(t)
-        //final ChartDetails sample = Sampling.makeSampling(start, stop, step);
+        final ChartDetails sample = Sampling.makeSampling(start, stop, step);
 
         //for X(t)
-        final ChartDetails sample = Sampling.makeX(start, stop, step);
+        //final ChartDetails sample = Sampling.makeX(start, stop, step);
 
         //for Y(t)
         //final ChartDetails sample = Sampling.makeY(start, stop, step);
 
         //for Z(t)
-       // final ChartDetails sample = Sampling.makeZ(start, stop, step);
+        //final ChartDetails sample = Sampling.makeZ(start, stop, step);
 
         //for U(t)
-       //final ChartDetails sample = Sampling.makeU(start, stop, step);
+        //final ChartDetails sample = Sampling.makeU(start, stop, step);
 
         //for V(t)
         //final ChartDetails sample = Sampling.makeV(start, stop, step);
@@ -71,8 +71,8 @@ public class Chart extends Application {
 
 
         final List<Pair<Double, Double>> dft = fourier.dft(sample);
-        final ChartDetails amplitudeMap = fourier.amplituda(dft);
-        final ChartDetails phaseMap = fourier.faza(dft);
+        final ChartDetails amplitudeMap = fourier.makeAmplitude(dft);
+        final ChartDetails phaseMap = fourier.makePhase(dft);
         final ChartDetails decibel = fourier.decibelScale(amplitudeMap);
         final ChartDetails idft = f1.idft(dft);
 
@@ -81,7 +81,7 @@ public class Chart extends Application {
     }
 
     private void makeChart(final Stage stage, final ChartDetails... chartDetails) {
-        final List<Pair<NumberAxis, NumberAxis>> axises = createAxises(chartDetails.length);
+        final List<Pair<NumberAxis, NumberAxis>> axises = createAxises(chartDetails);
         final GridPane root = new GridPane();
         makeChartProperties(root);
         setCharts(axises, root, chartDetails);
@@ -126,16 +126,16 @@ public class Chart extends Application {
         root.getColumnConstraints().addAll(column1, column2);
     }
 
-    private List<Pair<NumberAxis, NumberAxis>> createAxises(int length) {
+    private List<Pair<NumberAxis, NumberAxis>> createAxises(ChartDetails[] chartDetails) {
         List<Pair<NumberAxis, NumberAxis>> pairs = new ArrayList<>();
-        for (int i = 0; i < length; ++i) {
+        for (ChartDetails chartDetail : chartDetails) {
             //Defining the x axis
             NumberAxis xAxis = new NumberAxis();
-            xAxis.setLabel("X");
+            xAxis.setLabel(chartDetail.getxAxisTitle());
 
             //Defining the y axis
             NumberAxis yAxis = new NumberAxis();
-            yAxis.setLabel("Y");
+            yAxis.setLabel(chartDetail.getyAxisTitle());
 
             pairs.add(new Pair<>(xAxis, yAxis));
         }

@@ -31,7 +31,7 @@ public class Sampling {
             double tmp = a * pow(t, 2) + b * t + c;
             scores.add(tmp);
         }
-        return new ChartDetails("Para", scores);
+        return new ChartDetails("X(t)", scores, "t[s]", "X(t)");
     }
 
     public static ChartDetails makeY(double start, double stop, double step) {
@@ -41,7 +41,7 @@ public class Sampling {
             double tmp = 2 * pow(countX(t), 2) + 12 * cos(t);
             scores.add(tmp);
         }
-        return new ChartDetails("Para", scores);
+        return new ChartDetails("Y(t)", scores, "t[s]", "Y(t)");
     }
 
     public static ChartDetails makeZ(double start, double stop, double step) {
@@ -51,7 +51,7 @@ public class Sampling {
             double tmp = sin(2 * PI * 7 * t) * (countX(t)) - 0.2 * log10(abs(countY(t)) + PI);
             scores.add(tmp);
         }
-        return new ChartDetails("Para", scores);
+        return new ChartDetails("Z(t)", scores, "t[s]", "Z(t)");
     }
 
     public static ChartDetails makeP2(double start, double stop, double step) {
@@ -65,7 +65,7 @@ public class Sampling {
 
             scores.add(tmp);
         }
-        return new ChartDetails("P dla N=2", scores);
+        return new ChartDetails("P(t) dla N=2", scores, "t[s]", "P(t)");
     }
 
     public static ChartDetails makeP4(double start, double stop, double step) {
@@ -79,7 +79,7 @@ public class Sampling {
 
             scores.add(tmp);
         }
-        return new ChartDetails("P dla N=4:", scores);
+        return new ChartDetails("P(t) dla N=4", scores, "t[s]", "P(t)");
     }
 
     public static ChartDetails makeP55(double start, double stop, double step) {
@@ -93,7 +93,7 @@ public class Sampling {
 
             scores.add(tmp);
         }
-        return new ChartDetails("P dla N=55: ", scores);
+        return new ChartDetails("P(t) dla N=55", scores, "t[s]", "P(t)");
     }
 
     public static ChartDetails makeU(double start, double stop, double step) {
@@ -103,7 +103,7 @@ public class Sampling {
             double tmp = sqrt(abs(countY(t) * countY(t) * countZ(t))) - 1.8 * sin(0.4 * t * countZ(t) * countX(t));
             scores.add(tmp);
         }
-        return new ChartDetails("U:", scores);
+        return new ChartDetails("U(t)", scores, "t[s]", "U(t)");
     }
 
     public static ChartDetails makeV(double start, double stop, double step) {
@@ -122,7 +122,7 @@ public class Sampling {
                 scores.add(tmp);
             }
         }
-        return new ChartDetails("V: ", scores);
+        return new ChartDetails("V(t)", scores, "t[s]", "V(t)");
     }
 
     public static ChartDetails makeSampling(double start, double stop, double fs) {
@@ -135,6 +135,6 @@ public class Sampling {
             s = A * sin(2 * PI * f * t + fi);
             scores.add(s);
         }
-        return new ChartDetails("method.Sampling", scores);
+        return new ChartDetails("Simple tone's signal", scores, "t", "A");
     }
 }

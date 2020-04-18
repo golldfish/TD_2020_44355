@@ -26,42 +26,40 @@ public class DFT {
         return scores;
     }
 
-    public ChartDetails amplituda(List<Pair<Double, Double>> dft) {
+    public ChartDetails makeAmplitude(List<Pair<Double, Double>> dft) {
         List<Double> scores = new ArrayList<>();
-        for (int i = 0; i < dft.size(); ++i) {
-            double real = dft.get(i).getKey();
-            double imaginary = dft.get(i).getValue();
+        for (Pair<Double, Double> pair : dft) {
+            double real = pair.getKey();
+            double imaginary = pair.getValue();
             double sum = 0;
             sum = sqrt(real * real + imaginary * imaginary);
             scores.add(sum);
         }
-        return new ChartDetails ("Amplituda:", scores);
+        return new ChartDetails("DFT", scores, "Frequency", "Amplitude");
     }
 
-    public ChartDetails faza(List<Pair<Double, Double>> dft) {
+    public ChartDetails makePhase(List<Pair<Double, Double>> dft) {
         List<Double> scores = new ArrayList<>();
-        for (int i = 0; i < dft.size(); ++i) {
-            double real = dft.get(i).getKey();
-            double imaginary = dft.get(i).getValue();
+        for (Pair<Double, Double> pair : dft) {
+            double real = pair.getKey();
+            double imaginary = pair.getValue();
             double sum = 0;
 
-            if (real != 0) {
+            if (real != 0) {    //zabezpieczenie przed dzieleniem przez 0
                 sum = atan(imaginary / real);
                 scores.add(sum);
             }
         }
-        return new ChartDetails("Phase: ", scores);
+        return new ChartDetails("Phase spectrum", scores, "Frequency", "Amplitude");
     }
 
-    public ChartDetails decibelScale (ChartDetails amplituda)
-    {
+    public ChartDetails decibelScale(ChartDetails amplitude) {
         List<Double> scores = new ArrayList<>();
 
-        for (int i=0; i<amplituda.getValues().size();++i)
-        {
-            scores.add(10*log10(amplituda.getValues().get(i)));
+        for (int i = 0; i < amplitude.getValues().size(); ++i) {
+            scores.add(10 * log10(amplitude.getValues().get(i)));
         }
 
-        return new ChartDetails("Decybelowe: ", scores);
+        return new ChartDetails("DFT spectrum with decibel scale", scores, "Frequency", "Amplitude (Decibel scale)");
     }
 }
