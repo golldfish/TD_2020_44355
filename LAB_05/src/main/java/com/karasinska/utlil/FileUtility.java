@@ -31,6 +31,7 @@ public class FileUtility {
         }
         return new ChartDetails("FSK", result, "s[t]", "zFSK[t]");
     }
+
     public static ChartDetails getDoubleListFromFilePSK(final URL fileName) {
         final List<Double> result = new LinkedList<>();
         try (Stream<String> stream = Files.lines(Paths.get(fileName.toURI()))) {

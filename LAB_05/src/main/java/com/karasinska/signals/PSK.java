@@ -1,32 +1,34 @@
 package com.karasinska.signals;
 
 import com.karasinska.model.ChartDetails;
+import com.karasinska.model.Sinus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PSK {
-    private int bitsRestr=10;
-    public ChartDetails psk(List<Double> list, double amplitude, double f, double phi0, double phi1, int sampleCount, boolean restrict) {
-        List<Double> scores = new ArrayList<>();
-        double s =1;
-        boolean loop=true;
-        int t = 0;
-        for (int i=0; i<list.size()&&loop; i++) {
-            if (list.get(i) == 0) {
-                double sa = amplitude * Math.sin(Math.toRadians(2 * Math.PI * f * i + phi0));
-                scores.add(sa);
-            } else {
-                double sa = amplitude * Math.sin(Math.toRadians(2 * Math.PI * f * i + phi1));
-                scores.add(sa);
-            }
-            t++;
+    private int bitsRestr = 10;
 
-            if (restrict && i >= sampleCount * bitsRestr) {
+    public ChartDetails psk(int sample_count, String bits, boolean restrict) {
+        List<Double> scores = new ArrayList<>();
+
+        boolean loop = true;
+        double a = 2;
+        double f = 11;
+        double fi1 = 0;
+        double fi2 = Math.PI;
+
+        for (int i = 0; i < bits.length() && loop; ++i) {
+            if (bits.charAt(i) == '0') {
+                Sinus.calculateSinus(a, f, fi1, sample_count, scores);
+            } else {
+                Sinus.calculateSinus(a, f, fi2, sample_count, scores);
+            }
+            if (restrict && i >= bitsRestr) {
                 loop = false;
             }
-
         }
+
         return new ChartDetails("PSK", scores, "t[s]", "zPSK[t]");
     }
 }

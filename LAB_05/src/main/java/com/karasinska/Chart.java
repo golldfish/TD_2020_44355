@@ -7,6 +7,7 @@ import com.karasinska.signals.FSK;
 import com.karasinska.signals.PSK;
 import com.karasinska.utlil.FileUtility;
 import com.karasinska.utlil.S2BS;
+import com.karasinska.utlil.S2BSChart;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -27,11 +28,12 @@ public class Chart extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        S2BS s2BS = new S2BS();
+        S2BSChart s2BSChart = new S2BSChart();
         DFT fourier = new DFT();
         ASK ask = new ASK();
         FSK fsk = new FSK();
         PSK psk = new PSK();
+        S2BS s2BS = new S2BS();
         SignalLength signalLength = new SignalLength();
         String text = "Panda";
         double tb = 0.1;
@@ -44,21 +46,24 @@ public class Chart extends Application {
         double f0 = (N + 1) / tb;
         double f1 = (N + 2) / tb;
         double phi = 0.0;
-        ChartDetails mt = s2BS.stringToBinaryStream(text.trim(), Boolean.TRUE, sampleCount);
-        ChartDetails zASK = FileUtility.getDoubleListFromFileASK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_ASK.csv")));
-        //ChartDetails zASK = ask.ask(mt.getValues(), amplitude1, amplitude2, f, phi, sampleCount, false);
+
+        String bits = s2BS.stringToBinaryStream(text.trim(), Boolean.TRUE);
+        ChartDetails mt = s2BSChart.stringToBinaryStream(text.trim(), Boolean.TRUE, sampleCount);
+        //ChartDetails zASK = FileUtility.getDoubleListFromFileASK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_ASK.csv")));
+
+        ChartDetails zASK = ask.ask(sampleCount, bits, false);
         final List<Pair<Double, Double>> dftAM = fourier.dft(zASK);
         final ChartDetails askAM = fourier.makeAmplitude(dftAM);
         final ChartDetails dASK = fourier.decibelScale(askAM);
 
-        ChartDetails zFSK = FileUtility.getDoubleListFromFileFSK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_FSK.csv")));
-        //ChartDetails zFSK = fsk.fsk(mt.getValues(), amplitude2,f0,f1, phi, sampleCount, false);
+        //ChartDetails zFSK = FileUtility.getDoubleListFromFileFSK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_FSK.csv")));
+        ChartDetails zFSK = fsk.fsk(sampleCount, bits, false);
         final List<Pair<Double, Double>> dftFSK = fourier.dft(zFSK);
         final ChartDetails fskAM = fourier.makeAmplitude(dftFSK);
         final ChartDetails dFSK = fourier.decibelScale(fskAM);
 
-        ChartDetails zPSK = FileUtility.getDoubleListFromFilePSK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_PSK.csv")));
-        //ChartDetails zPSK = psk.psk(mt.getValues(), amplitude2, f,phi, Math.PI, sampleCount, false);
+        //ChartDetails zPSK = FileUtility.getDoubleListFromFilePSK(Objects.requireNonNull(getClass().getClassLoader().getResource("klucz_PSK.csv")));
+        ChartDetails zPSK = psk.psk(sampleCount, bits, false);
         final List<Pair<Double, Double>> dftPSK = fourier.dft(zPSK);
         final ChartDetails pskAM = fourier.makeAmplitude(dftPSK);
         final ChartDetails dPSK = fourier.decibelScale(pskAM);

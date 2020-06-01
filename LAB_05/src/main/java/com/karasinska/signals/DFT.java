@@ -28,12 +28,12 @@ public class DFT {
 
     public ChartDetails makeAmplitude(List<Pair<Double, Double>> dft) {
         List<Double> scores = new ArrayList<>();
-        for (int i=0; i<dft.size()/2;i++)  {
+        for (int i = 0; i < dft.size() / 2; i++) {
             double real = dft.get(i).getKey();
             double imaginary = dft.get(i).getValue();
             double sum = 0;
             sum = sqrt(real * real + imaginary * imaginary);
-            scores.add(sum/250);
+            scores.add(sum / 250);
         }
         return new ChartDetails("com.karasinska.signals.DFT - amplitude", scores, "Frequency [Hz]", "Amplitude");
     }

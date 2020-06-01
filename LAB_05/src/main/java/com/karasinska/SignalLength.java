@@ -1,6 +1,5 @@
 package com.karasinska;
 
-
 import com.karasinska.model.ChartDetails;
 
 import java.util.ArrayList;
