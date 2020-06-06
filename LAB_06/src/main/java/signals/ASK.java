@@ -47,7 +47,7 @@ public class ASK {
             double tmp = list.get(i) * a2 * Math.sin(fi + 2 * Math.PI * f * xlist.get(i));
             scores.add(tmp);
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja ASK - x(t)", scores, "t[s]", "x[t]");
     }
 
     public ChartDetails integralASK(String bits, List<Double> list) {
@@ -69,7 +69,7 @@ public class ASK {
             scores.add(sum*1000);
 
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja ASK - p(t)", scores, "t[s]", "p[t]");
     }
 
     public ChartDetails gateASK (List<Double>list)
@@ -87,7 +87,7 @@ public class ASK {
             }
         }
 
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja ASK - m(t)", scores, "t[s]", "m[t]");
     }
 
     private List<Double> makeXList(String bits) {

@@ -1,4 +1,5 @@
 package signals;
+
 import model.ChartDetails;
 
 
@@ -14,7 +15,7 @@ public class FSK {
     double f1 = 50;
     double f2 = 100;
     double fi = 0;
-    double h =2;
+    double h = 2;
 
     public ChartDetails fsk(String bits, boolean restrict) {
         List<Double> xlist = makeXList(bits);
@@ -34,7 +35,7 @@ public class FSK {
                 loop = false;
             }
         }
-        return new ChartDetails("ASK", ylist, "t[s]", "zASK[t]");
+        return new ChartDetails("FSK", ylist, "t[s]", "zFSK[t]");
     }
 
     public ChartDetails multiplyFSK1(String bits, List<Double> list) {
@@ -46,7 +47,7 @@ public class FSK {
             double tmp = list.get(i) * a * Math.sin(fi + 2 * Math.PI * f1 * xlist.get(i));
             scores.add(tmp);
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - x1(t)", scores, "t[s]", "x1[t]");
     }
 
     public ChartDetails multiplyFSK2(String bits, List<Double> list) {
@@ -58,80 +59,72 @@ public class FSK {
             double tmp = list.get(i) * a * Math.sin(fi + 2 * Math.PI * f2 * xlist.get(i));
             scores.add(tmp);
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - x2(t)", scores, "t[s]", "x2[t]");
     }
 
     public ChartDetails integralFSK1(String bits, List<Double> list) {
         List<Double> scores = new ArrayList<>();
         List<Double> xlist = makeXList(bits);
-        int bitsLength = list.size()/bits.length();
+        int bitsLength = list.size() / bits.length();
         int bitNumber = 0;
         double sum = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (i<xlist.size()-1) {
+            if (i < xlist.size() - 1) {
                 sum += list.get(i) * (xlist.get(i + 1) - xlist.get(i));
             }
 
-            if (bitNumber!=i/bitsLength)
-            {
+            if (bitNumber != i / bitsLength) {
                 sum = 0;
                 bitNumber++;
             }
-            scores.add(sum*1000);
+            scores.add(sum * 1000);
 
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - p1(t)", scores, "t[s]", "p1[t]");
     }
 
     public ChartDetails integralFSK2(String bits, List<Double> list) {
         List<Double> scores = new ArrayList<>();
         List<Double> xlist = makeXList(bits);
-        int bitsLength = list.size()/bits.length();
+        int bitsLength = list.size() / bits.length();
         int bitNumber = 0;
         double sum = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (i<xlist.size()-1) {
+            if (i < xlist.size() - 1) {
                 sum += list.get(i) * (xlist.get(i + 1) - xlist.get(i));
             }
 
-            if (bitNumber!=i/bitsLength)
-            {
+            if (bitNumber != i / bitsLength) {
                 sum = 0;
                 bitNumber++;
             }
-            scores.add(sum*1000);
+            scores.add(sum * 1000);
 
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - p2(t)", scores, "t[s]", "p2[t]");
     }
 
 
-    public ChartDetails result (List<Double> list1, List<Double> list2)
-    {
+    public ChartDetails result(List<Double> list1, List<Double> list2) {
         List<Double> scores = new ArrayList<>();
-        for (int i=0; i<list1.size() && i<list2.size() ; i++)
-        {
-            scores.add(list1.get(i)-list2.get(i));
+        for (int i = 0; i < list1.size() && i < list2.size(); i++) {
+            scores.add(list1.get(i) - list2.get(i));
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - p(t)", scores, "t[s]", "p[t]");
     }
 
-    public ChartDetails gateFSK (List<Double>list)
-    {
+    public ChartDetails gateFSK(List<Double> list) {
         List<Double> scores = new ArrayList<>();
 
-        for (Double e: list) {
-            if (e<h)
-            {
+        for (Double e : list) {
+            if (e < h) {
                 scores.add(0.0);
-            }
-            else
-            {
+            } else {
                 scores.add(1.0);
             }
         }
 
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja FSK - m(t)", scores, "t[s]", "m[t]");
     }
 
 

@@ -46,7 +46,7 @@ public class PSK {
             double tmp = list.get(i) * a * Math.sin(fi2 + 2 * Math.PI * f * xlist.get(i));
             scores.add(tmp);
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja PSK - x(t)", scores, "t[s]", "x[t]");
     }
 
     public ChartDetails integralPSK(String bits, List<Double> list) {
@@ -68,7 +68,7 @@ public class PSK {
             scores.add(sum*1000);
 
         }
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja PSK - p(t)", scores, "t[s]", "p[t]");
     }
 
     public ChartDetails gatePSK (List<Double>list)
@@ -86,7 +86,7 @@ public class PSK {
             }
         }
 
-        return new ChartDetails("ASK", scores, "t[s]", "zASK[t]");
+        return new ChartDetails("Demodulacja PSK - m(t)", scores, "t[s]", "m[t]");
     }
 
     private List<Double> makeXList(String bits) {

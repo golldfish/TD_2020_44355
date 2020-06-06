@@ -29,8 +29,8 @@ public class Chart extends Application {
         ChartDetails ttl = s2BSChart.stringToBinaryStream(text, Boolean.FALSE);
         ChartDetails men = menchester.menchester(clock.getValues(), s2BS.stringToBinaryStream(text, Boolean.FALSE));
         StringBuilder decMen = menchester.decMenchester(men.getValues(),16);
-        System.err.println(decMen.toString());
-        makeChart(primaryStage, clock, ttl, men, men);
+        System.err.println("Wynik dekodowania:\n" + decMen.toString());
+        makeChart(primaryStage, clock, ttl, men);
 
     }
 

@@ -1,11 +1,3 @@
-
-import demodulation.DemASK;
-import model.ChartDetails;
-import signals.ASK;
-import signals.DFT;
-import signals.FSK;
-import signals.PSK;
-import signals.S2BS;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -15,6 +7,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import model.ChartDetails;
+import signals.ASK;
+import signals.FSK;
+import signals.PSK;
+import signals.S2BS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +24,10 @@ public class Chart extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //S2BSChart s2BSChart = new S2BSChart();
-        DFT fourier = new DFT();
         ASK ask = new ASK();
         FSK fsk = new FSK();
         PSK psk = new PSK();
         S2BS s2BS = new S2BS();
-        DemASK demASK= new DemASK();
         String text = "Panda";
 
 

@@ -7,7 +7,6 @@ public class Menchester {
 
     public ChartDetails menchester(List<Double> clock, String bits) {
         List<Double> scores = new ArrayList<>();
-        double tmp = 0;
         boolean up = false;
         boolean down = false;
         char prevBit = '0';
@@ -45,7 +44,7 @@ public class Menchester {
                 scores.add(value);
             }
         }
-        return new ChartDetails("Menchester", scores, "", "");
+        return new ChartDetails("Menchester", scores, "t[s]", "Menchester");
     }
 
     public StringBuilder decMenchester(List<Double> menchester, int size) {
