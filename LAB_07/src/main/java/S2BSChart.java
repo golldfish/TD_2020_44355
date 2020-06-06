@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class S2BSChart {
-    private double ts = 125;
     public ChartDetails stringToBinaryStream(String text, Boolean isBigEndian) {
         byte[] bytes = text.getBytes();
         List<Double> list = new ArrayList<>();
@@ -19,7 +18,7 @@ public class S2BSChart {
             }
         }
         for (int bit = 0; bit < bits.length(); bit++) {
-            for (int sample = 0; sample < ts; sample++)
+            for (int sample = 0; sample < 125; sample++)
                 list.add(Double.parseDouble(String.valueOf(bits.charAt(bit))));
         }
         if (isBigEndian)

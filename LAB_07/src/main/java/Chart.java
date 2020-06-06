@@ -21,14 +21,16 @@ public class Chart extends Application {
         CLK clk = new CLK();
         MT mt = new MT();
         S2BSChart s2BSChart = new S2BSChart();
+        Menchester menchester = new Menchester();
+        S2BS s2BS = new S2BS();
         String text = "si";
 
-        ChartDetails clock = clk.clk(10, 0, 1, 2000);
+        ChartDetails clock = clk.clk(20, 0, 1, 2000);
         ChartDetails ttl = s2BSChart.stringToBinaryStream(text, Boolean.FALSE);
-
-        //String bits = s2BS.stringToBinaryStream(text.trim(), Boolean.FALSE);
-
-        makeChart(primaryStage, clock, ttl);
+        ChartDetails men = menchester.menchester(clock.getValues(), s2BS.stringToBinaryStream(text, Boolean.FALSE));
+        StringBuilder decMen = menchester.decMenchester(men.getValues(),16);
+        System.err.println(decMen.toString());
+        makeChart(primaryStage, clock, ttl, men, men);
 
     }
 

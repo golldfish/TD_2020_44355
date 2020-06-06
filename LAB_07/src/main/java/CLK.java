@@ -9,7 +9,7 @@ public class CLK {
     public ChartDetails clk (double freqency, double start, double stop, int stepsValue)
     {
         List<Double> yValues = new ArrayList<>();
-        double size = stop-start;
+        double size = start-stop;
         if (size ==0)
         {
             size = 1;
@@ -22,11 +22,11 @@ public class CLK {
             xValues.add(i*step);
             if (((int)(i*step/bitStep))%2==0)
             {
-                yValues.add(0.0);
+                yValues.add(1.0);
             }
             else
             {
-                yValues.add(1.0);
+                yValues.add(0.0);
             }
         }
         return new ChartDetails("CLK", yValues, "", "");
