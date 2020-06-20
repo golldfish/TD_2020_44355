@@ -18,22 +18,6 @@ public class Hamming {
 
     private S2BS s2BS = new S2BS();
 
-    public static void main(String[] args) {
-        String text = "P";
-        S2BS s2BS = new S2BS();
-        int len = s2BS.stringToBinaryStream(text, false).length();
-        Hamming hamming = new Hamming();
-        int[][] hCode = hamming.hamming74Encode(text);
-        System.out.println("Text:" + s2BS.stringToBinaryStream(text, false));
-        System.out.println("Hamming: " + hamming.arrayToString(hCode, len / 4, 7));
-        int[][] hNoise = hamming.noise(hCode, 1, 0, len);
-        System.out.println("Noise: " + hamming.arrayToString(hNoise, len / 4, 7));
-        int[][] hDetected = hamming.hammingDetect(hNoise, len);
-        System.out.println("Detected: " + hamming.arrayToString(hDetected, len / 4, 3));
-        int[][] hDecoded = hamming.hammingDecode(hDetected, hNoise, len);
-        System.out.println("Decoded: " + hamming.arrayToString(hDecoded, 2, 4));
-    }
-
     private SimpleMatrix make4bit(String text, int len) {
         SimpleMatrix array = new SimpleMatrix(len / 4, 4);
         int i = 0;
@@ -103,7 +87,7 @@ public class Hamming {
     }
 
     public int[][] hammingDecode(int[][] detected, int[][] text, int len) {
-        int[][] scores = new int[len / 4][4];
+        int[][] scores;
         boolean flag = false;
         int index = 0;
         for (int k = 0; k < len / 4; k++) {
@@ -121,12 +105,12 @@ public class Hamming {
                 }
                 flag = false;
             }
-            scores = removeRedundancyBits(text, len);
         }
+        scores = removeRedundancyBits(text, len);
         return scores;
     }
 
-    private String arrayToString(int[][] array, int row, int col) {
+    public String arrayToString(int[][] array, int row, int col) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -134,6 +118,19 @@ public class Hamming {
             }
         }
         return stringBuilder.toString();
+    }
+
+    public int[][] strToArr(StringBuilder txt, int row, int col) {
+        int jump = txt.length() / (row * col);
+        int[][] tmp = new int[row][col];
+        int index = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                tmp[i][j] = Character.getNumericValue(txt.charAt(index * jump));
+                index++;
+            }
+        }
+        return tmp;
     }
 
     private SimpleMatrix getSimpleMatrix(boolean isG, int row, int col) {
@@ -150,7 +147,7 @@ public class Hamming {
         return matrix;
     }
 
-    private int[][] noise(int[][] array, int row, int col, int len) {
+    public int[][] noise(int[][] array, int row, int col, int len) {
         int[][] tmp = new int[len / 4][7];
 
         for (int i = 0; i < len / 4; i++) {
